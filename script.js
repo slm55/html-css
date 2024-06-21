@@ -1,5 +1,4 @@
 const cards = document.querySelectorAll(".card");
-const result = document.getElementsByClassName("result")[0];
 let matched = 0;
 let cardOne, cardTwo;
 let disableDeck = false;
@@ -24,11 +23,9 @@ function matchCards(img1, img2) {
   if (img1 === img2) {
     matched++;
     if (matched == 8) {
-      fire();
       setTimeout(() => {
         results.push(trials);
         trials = 0;
-        updateDashboard();
         return shuffleCard();
       }, 3000);
     }
@@ -38,7 +35,6 @@ function matchCards(img1, img2) {
     return (disableDeck = false);
   }
   trials++;
-  document.querySelector(".trials").textContent = "Trials: " + trials;
 
   setTimeout(() => {
     cardOne.classList.add("shake");
@@ -67,7 +63,6 @@ function shuffleCard() {
   });
 }
 
-result.style.display = "none";
 shuffleCard();
 
 cards.forEach((card) => {
