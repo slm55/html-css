@@ -1,391 +1,486 @@
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - youtube.com/codingnepal -->
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">  
-    <title>Memory Card Game in JavaScript | CodingNepal</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      /* Import Google Font - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-body{
-  position: relative;
-  min-height: 100vh;
-  background: #6563FF;
-}
-.wrapper{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 25px;
-  border-radius: 10px;
-  background: #F8F8F8;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-.cards, .card, .view{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.cards{
-  height: 400px;
-  width: 400px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.cards .card{
-  cursor: pointer;
-  list-style: none;
-  user-select: none;
-  position: relative;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  height: calc(100% / 4 - 10px);
-  width: calc(100% / 4 - 10px);
-}
-.card.shake{
-  animation: shake 0.35s ease-in-out;
-}
-@keyframes shake {
-  0%, 100%{
-    transform: translateX(0);
-  }
-  20%{
-    transform: translateX(-13px);
-  }
-  40%{
-    transform: translateX(13px);
-  }
-  60%{
-    transform: translateX(-8px);
-  }
-  80%{
-    transform: translateX(8px);
-  }
-}
-.card .view{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  border-radius: 7px;
-  background: #fff;
-  pointer-events: none;
-  backface-visibility: hidden;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  transition: transform 0.25s linear;
-}
-.card .front-view img{
-  width: 19px;
-}
-.card .back-view img{
-  max-width: 45px;
-}
-.card .back-view{
-  transform: rotateY(-180deg);
-}
-.card.flip .back-view{
-  transform: rotateY(0);
-}
-.card.flip .front-view{
-  transform: rotateY(180deg);
-}
 
-.dashboard {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: white;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
+<head>
+  <meta charset="utf-8">
+  <title>Memory Card Game in JavaScript | CodingNepal</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Import Google Font - Poppins */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-@media screen and (max-width: 700px) {
-  .cards{
-    height: 350px;
-    width: 350px;
-  }
-  .card .front-view img{
-    width: 17px;
-  }
-  .card .back-view img{
-    max-width: 40px;
-  }
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-@media screen and (max-width: 530px) {
-  .cards{
-    height: 300px;
-    width: 300px;
-  }
-  .card .front-view img{
-    width: 15px;
-  }
-  .card .back-view img{
-    max-width: 35px;
-  }
-}
-    </style>
-  </head>
-  <body>
-    <div class="wrapper">
-      <ul class="cards">
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-1.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-6.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-3.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-2.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-1.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-5.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-2.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-6.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-3.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-4.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-5.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-4.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-4.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-4.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-4.png" alt="card-img">
-          </div>
-        </li>
-        <li class="card">
-          <div class="view front-view">
-            <img src="images/que_icon.png" alt="icon">
-          </div>
-          <div class="view back-view">
-            <img src="images/img-4.png" alt="card-img">
-          </div>
-        </li>
-      </ul>
-    </div>
+    body {
+      position: relative;
+      min-height: 100vh;
+      background: #6563FF;
+    }
+
+    .wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 25px;
+      border-radius: 10px;
+      background: #F8F8F8;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .wrapper h1 {
+      color: black;
+      text-align: center;
+    }
+
+    .cards,
+    .card,
+    .view {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cards {
+      height: 400px;
+      width: 400px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .cards .card {
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      position: relative;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      height: calc(100% / 4 - 10px);
+      width: calc(100% / 4 - 10px);
+    }
+
+    .card.shake {
+      animation: shake 0.35s ease-in-out;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-13px);
+      }
+
+      40% {
+        transform: translateX(13px);
+      }
+
+      60% {
+        transform: translateX(-8px);
+      }
+
+      80% {
+        transform: translateX(8px);
+      }
+    }
+
+    .card .view {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      border-radius: 7px;
+      background: #fff;
+      pointer-events: none;
+      backface-visibility: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.25s linear;
+    }
+
+    .card .front-view img {
+      width: 19px;
+    }
+
+    .card .back-view img {
+      max-width: 45px;
+    }
+
+    .card .back-view {
+      transform: rotateY(-180deg);
+    }
+
+    .card.flip .back-view {
+      transform: rotateY(0);
+    }
+
+    .card.flip .front-view {
+      transform: rotateY(180deg);
+    }
+
+    .dashboard {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: white;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .start {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .start button {
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: xx-large;
+      font-weight: bold;
+      border: none;
+      color: black;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    @media screen and (max-width: 700px) {
+      .cards {
+        height: 350px;
+        width: 350px;
+      }
+
+      .card .front-view img {
+        width: 17px;
+      }
+
+      .card .back-view img {
+        max-width: 40px;
+      }
+    }
+
+    @media screen and (max-width: 530px) {
+      .cards {
+        height: 300px;
+        width: 300px;
+      }
+
+      .card .front-view img {
+        width: 15px;
+      }
+
+      .card .back-view img {
+        max-width: 35px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="start">
+    <button>Start</button>
+  </div>
+  <div class="wrapper">
+    <h1>Memory game</h1>
+    <h3 class="time"></h3>
+    <ul class="cards">
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-1.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-6.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-3.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-2.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-1.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-5.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-2.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-6.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-3.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-4.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-5.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-4.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-4.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-4.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-4.png" alt="card-img">
+        </div>
+      </li>
+      <li class="card">
+        <div class="view front-view">
+          <img src="images/que_icon.png" alt="icon">
+        </div>
+        <div class="view back-view">
+          <img src="images/img-4.png" alt="card-img">
+        </div>
+      </li>
+    </ul>
+    <h2 class="trials">Trials: 0</h2>
+  </div>
+
+  <div class="dashboard">
+    <h3>Best results</h3>
+  </div>
 
 
-   <script>
+  <script>
+    const board = document.querySelector(".wrapper");
     const cards = document.querySelectorAll(".card");
-let matched = 0;
-let cardOne, cardTwo;
-let disableDeck = false;
-let trials = 0;
-let results = [];
+    const welcome = document.querySelector(".start");
+    const button = document.querySelector(".start button");
+    const timeText = document.querySelector(".time");
+    let matched = 0;
+    let cardOne, cardTwo;
+    let disableDeck = false;
+    let trials = 0;
+    let startTime = new Date();
+    let results = [];
 
-function flipCard({ target: clickedCard }) {
-  if (cardOne !== clickedCard && !disableDeck) {
-    clickedCard.classList.add("flip");
-    if (!cardOne) {
-      return (cardOne = clickedCard);
+    button.addEventListener("click", start);
+
+    reset();
+
+    function start() {
+      welcome.style.display = "none";
+      board.style.display = "";
+      startTime = Date.now();
+      shuffleCard();
     }
-    cardTwo = clickedCard;
-    disableDeck = true;
-    let cardOneImg = cardOne.querySelector(".back-view img").src,
-      cardTwoImg = cardTwo.querySelector(".back-view img").src;
-    matchCards(cardOneImg, cardTwoImg);
-  }
-}
 
-function matchCards(img1, img2) {
-  if (img1 === img2) {
-    matched++;
-    if (matched == 8) {
+    function reset() {
+      welcome.style.display = "";
+      board.style.display = "none";
+    }
+
+    function flipCard({ target: clickedCard }) {
+      if (cardOne !== clickedCard && !disableDeck) {
+        clickedCard.classList.add("flip");
+        if (!cardOne) {
+          return (cardOne = clickedCard);
+        }
+        cardTwo = clickedCard;
+        disableDeck = true;
+        let cardOneImg = cardOne.querySelector(".back-view img").src,
+          cardTwoImg = cardTwo.querySelector(".back-view img").src;
+        matchCards(cardOneImg, cardTwoImg);
+      }
+    }
+
+    function matchCards(img1, img2) {
+      if (img1 === img2) {
+        matched++;
+        if (matched == 8) {
+          fire();
+          let finishTime = new Date();
+          let timeTaken = finishTime - startTime;
+          let time = Math.floor(timeTaken / 1000)
+          timeText.textContent = `Finished in ${time} seconds`
+          timeText.style.display = "";
+
+          setTimeout(() => {
+            results.push({trials, time});
+            trials = 0;
+            updateDashboard();
+            timeText.style.display = "none";
+            reset();
+          }, 3000);
+        }
+        cardOne.removeEventListener("click", flipCard);
+        cardTwo.removeEventListener("click", flipCard);
+        cardOne = cardTwo = "";
+        return (disableDeck = false);
+      }
+      trials++;
+      updateTrials();
+
       setTimeout(() => {
-        results.push(trials);
-        trials = 0;
-        return shuffleCard();
-      }, 3000);
+        cardOne.classList.add("shake");
+        cardTwo.classList.add("shake");
+      }, 400);
+
+      setTimeout(() => {
+        cardOne.classList.remove("shake", "flip");
+        cardTwo.classList.remove("shake", "flip");
+        cardOne = cardTwo = "";
+        disableDeck = false;
+      }, 1200);
     }
-    cardOne.removeEventListener("click", flipCard);
-    cardTwo.removeEventListener("click", flipCard);
-    cardOne = cardTwo = "";
-    return (disableDeck = false);
-  }
-  trials++;
 
-  setTimeout(() => {
-    cardOne.classList.add("shake");
-    cardTwo.classList.add("shake");
-  }, 400);
+    function shuffleCard() {
+      matched = 0;
+      disableDeck = false;
+      cardOne = cardTwo = "";
+      let arr = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8];
+      arr.sort(() => (Math.random() > 0.5 ? 1 : -1));
+      cards.forEach((card, i) => {
+        card.classList.remove("flip");
+        let imgTag = card.querySelector(".back-view img");
+        imgTag.src = `images/img-${arr[i]}.png`;
+        card.addEventListener("click", flipCard);
+      });
+    }
 
-  setTimeout(() => {
-    cardOne.classList.remove("shake", "flip");
-    cardTwo.classList.remove("shake", "flip");
-    cardOne = cardTwo = "";
-    disableDeck = false;
-  }, 1200);
-}
-
-function shuffleCard() {
-  matched = 0;
-  disableDeck = false;
-  cardOne = cardTwo = "";
-  let arr = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8];
-  arr.sort(() => (Math.random() > 0.5 ? 1 : -1));
-  cards.forEach((card, i) => {
-    card.classList.remove("flip");
-    let imgTag = card.querySelector(".back-view img");
-    imgTag.src = `images/img-${arr[i]}.png`;
-    card.addEventListener("click", flipCard);
-  });
-}
-
-shuffleCard();
-
-cards.forEach((card) => {
-  card.addEventListener("click", flipCard);
-});
-
-function fire() {
-  const end = Date.now() + 5 * 1000;
-
-  const colors = ["#bb0000", "#ffffff"];
-
-  (function frame() {
-    confetti({
-      particleCount: 2,
-      angle: 60,
-      spread: 55,
-      origin: { x: 0 },
-      colors: colors,
+    cards.forEach((card) => {
+      card.addEventListener("click", flipCard);
     });
 
-    confetti({
-      particleCount: 2,
-      angle: 120,
-      spread: 55,
-      origin: { x: 1 },
-      colors: colors,
-    });
+    function fire() {
+      const end = Date.now() + 3 * 1000;
 
-    if (Date.now() < end) {
-      requestAnimationFrame(frame);
+      const colors = ["#bb0000", "#ffffff"];
+
+      (function frame() {
+        confetti({
+          particleCount: 2,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: colors,
+        });
+
+        confetti({
+          particleCount: 2,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: colors,
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
     }
-  })();
-}
 
-function updateDashboard() {
-  document.querySelector(".trials").textContent = "Trials: 0";
-  const dashboard = document.querySelector(".dashboard");
-  results.sort();
-  if (results.length > 5) {
-    results = results.slice(0, 5);
-  }
-  dashboard.innerHTML = "<h3>Best results</h3>";
-  results.forEach((result, index) => {
-    dashboard.innerHTML += `<p>${index + 1}. ${result} trials</p>`;
-  });
-}
+    function updateTrials() {
+      document.querySelector(".trials").textContent = `Trials: ${trials}`;
+    }
 
-   </script>
-    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    function updateDashboard() {
+      updateTrials()
+      const dashboard = document.querySelector(".dashboard");
+      results.sort((a, b) => a.time - b.time);
+      if (results.length > 5) {
+        results = results.slice(0, 5);
+      }
+      dashboard.innerHTML = "<h3>Best results</h3>";
+      results.forEach((result, index) => {
+        dashboard.innerHTML += `<p>${index + 1}. ${result.trials} trials - ${result.time} sec.</p>`;
+      });
+    }
 
-  </body>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+
+</body>
+
 </html>
